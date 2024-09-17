@@ -12,6 +12,7 @@ steps:
   - name: 'alpine'
     entrypoint: 'echo'
     args: ['Build finished successfully!']
+    
 # Specify logging options
 options:
   logging: CLOUD_LOGGING_ONLY
