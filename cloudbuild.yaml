@@ -35,5 +35,6 @@ steps:
     args: ['-c', 'echo Build finished successfully!']
 
 # Specify logging options
+
 options:
   logging: CLOUD_LOGGING_ONLY
