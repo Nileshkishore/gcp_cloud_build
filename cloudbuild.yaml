@@ -32,9 +32,8 @@ steps:
       '--zone',
       'us-central1-a',
       '--num-nodes',
-      '3'
+      '1'
       ]
-
   # Step 6: Set up kubectl (Google Cloud SDK)
   - name: 'gcr.io/cloud-builders/kubectl'
     args: [
