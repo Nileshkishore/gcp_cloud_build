@@ -1,0 +1,14 @@
+steps:
+  # Step 1: Print a message to confirm build started
+  - name: 'alpine'
+    entrypoint: 'echo'
+    args: ['Build started on Google Cloud!']
+
+  # Step 2: Run any basic commands, such as listing files
+  - name: 'alpine'
+    args: ['ls', '-la']
+
+  # Step 3: Print the build success message
+  - name: 'alpine'
+    entrypoint: 'echo'
+    args: ['Build finished successfully!']
