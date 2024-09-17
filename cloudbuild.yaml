@@ -8,6 +8,13 @@ steps:
   # Step 2: Run any basic commands, such as listing files
   - name: 'alpine'
     args: ['ls', '-la']
+  
+  - name: 'alpine'
+    args: ['pip install -r req/requirements.txt']
+  
+  - name: 'alpine'
+    args: ['python main.py']
+
 
   # Step 3: Print the build success message
   - name: 'alpine'
