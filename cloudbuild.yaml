@@ -9,16 +9,20 @@ steps:
     entrypoint: 'sh'
     args: ['-c', 'ls -la']
 
-  # Install dependencies
+  # Step 1: Print a message to confirm build started and install dependencies
   - name: 'python:3.12'
     entrypoint: 'sh'
-    args: ['-c', 'pip install -r req/requirements.txt']
+    args: ['-c', '
+      echo Build started on Google Cloud!
+      pip install -r req/requirements.txt
+      python main.py
+    ']
 
-  # Run the main script
+  # Step 2: Print the build success message
   - name: 'python:3.12'
     entrypoint: 'sh'
-    args: ['-c', 'python main.py']
-
+    args: ['-c', 'ls -al']
+    
   # Step 3: Print the build success message
   - name: 'alpine'
     entrypoint: 'sh'
