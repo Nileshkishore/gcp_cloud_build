@@ -1,0 +1,17 @@
+# pandas
+# numpy
+# mlflow
+# ydata-profiling
+# scikit-learn
+# python-dotenv
+# evidently
+# setuptools
+
+pandas
+numpy  # Ensures compatibility with other libraries
+mlflow
+ydata-profiling
+scikit-learn
+python-dotenv
+evidently
+setuptools
