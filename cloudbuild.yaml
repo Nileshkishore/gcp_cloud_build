@@ -42,7 +42,7 @@ steps:
       'container',
       'clusters',
       'get-credentials',
-      'my-cluster',
+      'my-cluster-nk',
       '--zone',
       'us-central1-a'
     ]
