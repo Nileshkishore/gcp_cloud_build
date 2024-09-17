@@ -4,6 +4,7 @@ steps:
     entrypoint: 'echo'
     args: ['Build started on Google Cloud!']
 
+
   # Step 2: Run any basic commands, such as listing files
   - name: 'alpine'
     args: ['ls', '-la']
@@ -13,7 +14,7 @@ steps:
     entrypoint: 'echo'
     args: ['Build finished successfully!']
 
-    
+
 # Specify logging options
 options:
   logging: CLOUD_LOGGING_ONLY
