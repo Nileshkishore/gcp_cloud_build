@@ -33,15 +33,15 @@ steps:
       '${_ZONE}'
     ]
 
-  # Step 7: Substitute placeholders in the deployment YAML
-  - name: 'alpine'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        sed -e "s/\${PROJECT_ID}/${_PROJECT_ID}/g" \
-            -e "s/\${BUILD_ID}/${_BUILD_ID}/g" \
-            deployment.yaml > deployment.yaml
+# Step 7: Substitute placeholders in the deployment YAML
+- name: 'alpine'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      sed -e "s/\${PROJECT_ID}/${_PROJECT_ID}/g" \
+          -e "s/\${BUILD_ID}/${_BUILD_ID}/g" \
+          deployment.yaml > deployment.yaml
 
   # Step 7: Apply the Kubernetes Deployment
   - name: 'gcr.io/cloud-builders/kubectl'
