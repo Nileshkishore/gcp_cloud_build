@@ -35,6 +35,7 @@ steps:
       '1'
     ]
 
+
   # Step 7: Get credentials for the GKE cluster
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
