@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app-container
-        image: gcr.io/${PROJECT_ID}/nk:{$BUILD_ID}
+        image: <DOCKER_IMAGE_TAGGED>
         ports:
         - containerPort: 5000
 
