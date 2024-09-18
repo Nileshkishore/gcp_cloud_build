@@ -32,7 +32,8 @@ steps:
       '--zone',
       'us-central1-a',
       '--num-nodes',
-      '1'
+      '1',
+      --service-account=compute-engine-sa@nileshproject-435805.iam.gserviceaccount.com
     ]
 
 
