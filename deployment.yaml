@@ -1,24 +1,3 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: my-app-deployment
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: my-app
-#   template:
-#     metadata:
-#       labels:
-#         app: my-app
-#     spec:
-#       containers:
-#       - name: my-app-container
-#         image: gcr.io/${PROJECT_ID}/nk:{$BUILD_ID}
-#         ports:
-#         - containerPort: 5000
-
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,6 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app-container
-        image: gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}  # Ensure this matches your substitution
+        image: gcr.io/${PROJECT_ID}/nk:{$BUILD_ID}
         ports:
         - containerPort: 5000
+
