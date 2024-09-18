@@ -39,7 +39,7 @@ steps:
     args:
       - '-c'
       - |
-        sed -e 's|<DOCKER_IMAGE_TAGGED>|nileshkishore2001/iris_model:${BUILD_NUMBER}|' template_deployment.yaml >> deployment.yaml
+        sed -e 's|<DOCKER_IMAGE_TAGGED>|nileshkishore2001/iris_model:${BUILD_ID}|' template_deployment.yaml >> deployment.yaml
 
   # Step 7: Apply the Kubernetes Deployment
   - name: 'gcr.io/cloud-builders/kubectl'
