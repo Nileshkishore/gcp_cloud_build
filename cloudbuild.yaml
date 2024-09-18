@@ -22,19 +22,19 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/nk:$BUILD_ID']
 
-  # Step 6: Create GKE cluster (Run only once to create the cluster)
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: [
-      'container',
-      'clusters',
-      'create',
-      'my-cluster-nk',
-      '--zone',
-      'us-central1-a',
-      '--num-nodes',
-      '1',
-      --service-account=compute-engine-sa@nileshproject-435805.iam.gserviceaccount.com
-    ]
+  # # Step 6: Create GKE cluster (Run only once to create the cluster)
+  # - name: 'gcr.io/cloud-builders/gcloud'
+  #   args: [
+  #     'container',
+  #     'clusters',
+  #     'create',
+  #     'my-cluster-nk',
+  #     '--zone',
+  #     'us-central1-a',
+  #     '--num-nodes',
+  #     '1',
+  #     --service-account=compute-engine-sa@nileshproject-435805.iam.gserviceaccount.com
+  #   ]
 
 
   # Step 7: Get credentials for the GKE cluster
@@ -47,14 +47,22 @@ steps:
       '--zone',
       'us-central1-a'
     ]
-
   # Step 8: Apply the Kubernetes Deployment
   - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'  # Replace with your cluster zone
+      - 'CLOUDSDK_COMPUTE_REGION='              # Set if using a regional cluster
+      - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster-nk'  # Replace with your cluster name
     args: ['apply', '-f', 'deployment.yaml']
 
   # Step 9: Apply the Kubernetes Service to expose the app
   - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'  # Replace with your cluster zone
+      - 'CLOUDSDK_COMPUTE_REGION='              # Set if using a regional cluster
+      - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster-nk'  # Replace with your cluster name
     args: ['apply', '-f', 'service.yaml']
+
 
   # Step 10: Print the build success message
   - name: 'alpine'
