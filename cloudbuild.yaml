@@ -41,14 +41,14 @@ steps:
       - |
         sed -e 's|<DOCKER_IMAGE_TAGGED>|gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}|' template_deployment.yaml >> deployment.yaml
 
-  # Step 7: Apply the Kubernetes Deployment
+  # Step 8: Apply the Kubernetes Deployment
   - name: 'gcr.io/cloud-builders/kubectl'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
       - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER}'
     args: ['apply', '-f', 'deployment.yaml']
 
-  # Step 8: Apply the Kubernetes Service to expose the app
+  # Step 9: Apply the Kubernetes Service to expose the app
   - name: 'gcr.io/cloud-builders/kubectl'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
