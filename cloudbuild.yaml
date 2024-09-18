@@ -78,5 +78,7 @@ images:
   - gcr.io/$PROJECT_ID/nk:$BUILD_ID
 
 substitutions:
-  _CLUSTER: 'my-cluster-nk'
-  _ZONE: 'us-central1-a'
+  # _CLUSTER: 'my-cluster-nk'
+  # _ZONE: 'us-central1-a'
+  PROJECT_ID: '$PROJECT_ID'
+  BUILD_ID: '$BUILD_ID'
