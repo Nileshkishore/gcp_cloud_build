@@ -63,5 +63,5 @@ images:
 substitutions:
   _CLUSTER: 'my-cluster-nk'
   _ZONE: 'us-central1-a'
-  _PROJECT_ID: 'your-project-id'
+  _PROJECT_ID: '$PROJECT_ID'
   _BUILD_ID: '$BUILD_ID'
