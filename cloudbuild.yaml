@@ -41,7 +41,7 @@ steps:
     - |
       sed -e "s/\${PROJECT_ID}/${_PROJECT_ID}/g" \
           -e "s/\${BUILD_ID}/${_BUILD_ID}/g" \
-          deployment.yaml > deployment.yaml
+          deployment.yaml > deployment-updated.yaml
 
   # Step 7: Apply the Kubernetes Deployment
   - name: 'gcr.io/cloud-builders/kubectl'
