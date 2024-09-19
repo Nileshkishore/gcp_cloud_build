@@ -83,6 +83,7 @@ options:
 images:
   - 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}'
 
+
 substitutions:
   _CLUSTER: 'my-cluster-nk'
   _ZONE: 'us-central1-a'
