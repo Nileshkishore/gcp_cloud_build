@@ -24,18 +24,18 @@ steps:
 
 
   # Step 6: Create GKE cluster (Run only once to create the cluster)
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: [
-      'container',
-      'clusters',
-      'create',
-      'my-cluster-nilesh',
-      '--zone',
-      'us-central1-a',
-      '--num-nodes',
-      '1',
-      --service-account=compute-engine-sa@nileshproject-435805.iam.gserviceaccount.com
-    ]
+  # - name: 'gcr.io/cloud-builders/gcloud'
+  #   args: [
+  #     'container',
+  #     'clusters',
+  #     'create',
+  #     'my-cluster-nilesh',
+  #     '--zone',
+  #     'us-central1-a',
+  #     '--num-nodes',
+  #     '1',
+  #     --service-account=compute-engine-sa@nileshproject-435805.iam.gserviceaccount.com
+  #   ]
 
   # Step 6: Get credentials for the GKE cluster
   - name: 'gcr.io/cloud-builders/gcloud'
