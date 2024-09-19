@@ -48,27 +48,14 @@ steps:
       '${_ZONE}'
     ]
 
-# Step 7: Substitute placeholders in the deployment YAML
-  - name: 'alpine'
-    entrypoint: 'sh'
+  # deploy container image to GKE
+  - name: "gcr.io/cloud-builders/gke-deploy"
     args:
-      - '-c'
-      - |
-        sed -e 's|<DOCKER_IMAGE_TAGGED>|gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}|' template_deployment.yaml >> deployment.yaml
-
-  # Step 8: Apply the Kubernetes Deployment
-  - name: 'gcr.io/cloud-builders/kubectl'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER}'
-    args: ['apply', '-f', 'deployment.yaml']
-
-  # Step 9: Apply the Kubernetes Service to expose the app
-  - name: 'gcr.io/cloud-builders/kubectl'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER}'
-    args: ['apply', '-f', 'service.yaml']
+    - run
+    - --filename=kubernetes-resource-file
+    - --image=gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}
+    - --location=${_ZONE}
+    - --cluster=${_CLUSTER}
 
   # Step 9: Print the build success message
   - name: 'alpine'
