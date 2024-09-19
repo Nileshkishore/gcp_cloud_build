@@ -16,3 +16,5 @@ sepal length (cm),sepal width (cm),petal length (cm),petal width (cm),target
 ,,2,,
 655,256,5431,234,0
 654,256,5431,234,1
+32,332,234,2,
+3,22,44,32,2
