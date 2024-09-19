@@ -29,7 +29,7 @@ steps:
       'container',
       'clusters',
       'create',
-      'my-cluster-nk',
+      'my-cluster-nilesh',
       '--zone',
       'us-central1-a',
       '--num-nodes',
