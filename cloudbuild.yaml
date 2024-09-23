@@ -23,7 +23,7 @@ steps:
     args: ['push', 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}']
 
 
-  Step 6: Create GKE cluster (Run only once to create the cluster)
+  # Step 6: Create GKE cluster (Run only once to create the cluster)
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
       'container',
