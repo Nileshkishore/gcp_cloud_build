@@ -17,11 +17,10 @@ steps:
   # Step 4: Build the Docker image with the build ID as the tag
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}', '.']
-
+     
   # Step 5: Push the Docker image to Google Container Registry (GCR)
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}']
-
   # Step 6: Create GKE cluster (Run only once to create the cluster)
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
