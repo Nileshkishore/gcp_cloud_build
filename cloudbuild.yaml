@@ -34,7 +34,7 @@ steps:
     ]
 
   # Step 7: Deploy the Helm chart
-  - name: 'gcr.io/google-containers/helm:3.8.0'  # Use Google Cloud SDK image
+  - name: 'helm/helm:v3.12.0'  # Use Google Cloud SDK image
     args:
       [
         'upgrade', '--install', 'my-app-release', './helm-chart',
