@@ -42,7 +42,6 @@ steps:
         '--set', 'image.tag=${_BUILD_ID}',
         '--namespace', 'default'
       ]
-
   # Step 8: Print the build success message
   - name: 'alpine'
     entrypoint: 'sh'
