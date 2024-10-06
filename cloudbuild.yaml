@@ -47,13 +47,6 @@ steps:
       '${_ZONE}'
     ]
 
-  # Step 8: Install Helm if not already installed
-  - name: 'alpine/helm:3.8.0'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        helm init --client-only
 
   # Step 9: Deploy the Helm chart
   - name: 'alpine/helm:3.8.0'
