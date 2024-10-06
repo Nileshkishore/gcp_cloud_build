@@ -22,7 +22,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}']
 
-  # Step 6: Get credentials for the GKE cluster
+  # Step 6: Get credentials for the GKE cluster using gcloud
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
       'container',
@@ -34,10 +34,7 @@ steps:
     ]
 
   # Step 7: Deploy the Helm chart
-  - name: 'alpine/helm:3.8.0'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER}'
+  - name: 'gcr.io/google-containers/helm:3.8.0'  # Use Google Cloud SDK image
     args:
       [
         'upgrade', '--install', 'my-app-release', './helm-chart',
