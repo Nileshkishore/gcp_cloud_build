@@ -22,6 +22,15 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}']
 
+  # Step 6: Install the GKE authentication plugin for kubectl
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        apt-get update && \
+        apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
+
   # # Step 6: Create GKE cluster (Run only once to create the cluster)
   # - name: 'gcr.io/cloud-builders/gcloud'
   #   args: [
