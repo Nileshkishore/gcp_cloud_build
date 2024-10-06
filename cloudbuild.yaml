@@ -22,20 +22,25 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}']
 
-  # Step 6: Install Google Cloud SDK and the GKE auth plugin
+  # Step 6: Install Google Cloud SDK and kubectl, and verify installation
   - name: 'debian'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
+        # Add Google Cloud SDK repository if it doesn't exist
+        if ! grep -rhE ^deb /etc/apt/sources.list* | grep "cloud-sdk"; then
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" > /etc/apt/sources.list.d/google-cloud-sdk.list && \
+          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -;
+        fi
+        # Update package lists and install components
         apt-get update && \
-        apt-get install -y curl && \
-        curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
-        echo "deb [signed-by=/etc/apt/trusted.gpg.d/cloud.gpg] http://packages.cloud.google.com/apt google-cloud-sdk main" > /etc/apt/sources.list.d/google-cloud-sdk.list && \
-        apt-get update && \
-        apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
+        apt-get install -y google-cloud-sdk kubectl google-cloud-sdk-gke-gcloud-auth-plugin && \
+        # Verify installations
+        kubectl version --client && \
+        gke-gcloud-auth-plugin --version
 
-  # Step 6: Get credentials for the GKE cluster
+  # Step 7: Get credentials for the GKE cluster
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
       'container',
@@ -46,11 +51,8 @@ steps:
       '${_ZONE}'
     ]
 
-  # Step 7: Deploy the Helm chart
-  - name: 'alpine/helm:3.8.0'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER}'
+  # Step 8: Deploy the Helm chart
+  - name: 'bitnami/helm:3.12.0'  # Use Bitnami's Helm image
     args:
       [
         'upgrade', '--install', 'my-app-release', './helm-chart',
@@ -59,7 +61,7 @@ steps:
         '--namespace', 'default'
       ]
 
-  # Step 8: Print the build success message
+  # Step 9: Print the build success message
   - name: 'alpine'
     entrypoint: 'sh'
     args: ['-c', 'echo Build finished successfully!']
