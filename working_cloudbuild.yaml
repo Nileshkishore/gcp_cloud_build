@@ -1,0 +1,89 @@
+steps:
+  # Step 1: Print a message to confirm the build started
+  - name: 'alpine'
+    entrypoint: 'sh'
+    args: ['-c', 'echo Build started on Google Cloud!']
+
+  # Step 2: Run basic commands (optional)
+  - name: 'alpine'
+    entrypoint: 'sh'
+    args: ['-c', 'ls -la']
+
+  # Step 3: Install dependencies and run Python script
+  - name: 'python:3.12'
+    entrypoint: 'sh'
+    args: ['-c', 'pip install -r req/requirements.txt && python main.py']
+
+  # Step 4: Build the Docker image with the build ID as the tag
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}', '.']
+     
+  # Step 5: Push the Docker image to Google Container Registry (GCR)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}']
+  # Step 6: Create GKE cluster (Run only once to create the cluster)
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'container',
+      'clusters',
+      'create',
+      'my-cluster-nilesh',
+      '--zone',
+      'us-central1-a',
+      '--num-nodes',
+      '1',
+      --service-account=compute-engine-sa@nileshproject-435805.iam.gserviceaccount.com
+    ]
+
+  # Step 6: Get credentials for the GKE cluster
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'container',
+      'clusters',
+      'get-credentials',
+      '${_CLUSTER}',
+      '--zone',
+      '${_ZONE}'
+    ]
+
+# Step 7: Substitute placeholders in the deployment YAML
+  - name: 'alpine'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        sed -e 's|<DOCKER_IMAGE_TAGGED>|gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}|' template_deployment.yaml >> deployment.yaml
+
+  # Step 8: Apply the Kubernetes Deployment
+  - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER}'
+    args: ['apply', '-f', 'deployment.yaml']
+
+  # Step 9: Apply the Kubernetes Service to expose the app
+  - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER}'
+    args: ['apply', '-f', 'service.yaml']
+
+  # Step 9: Print the build success message
+  - name: 'alpine'
+    entrypoint: 'sh'
+    args: ['-c', 'echo Build finished successfully!']
+
+# Specify logging options
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+# Specify required images for the build (optional)
+images:
+  - 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}'
+
+
+substitutions:
+  _CLUSTER: 'my-cluster-nilesh'
+  _ZONE: 'us-central1-a'
+  _PROJECT_ID: '$PROJECT_ID'
+  _BUILD_ID: '$BUILD_ID'
