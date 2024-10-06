@@ -22,6 +22,15 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/${_PROJECT_ID}/nk:${_BUILD_ID}']
 
+  # Step 6: Install the gke-gcloud-auth-plugin
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        apt-get update && \
+        apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+        
   # Step 6: Get credentials for the GKE cluster
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
