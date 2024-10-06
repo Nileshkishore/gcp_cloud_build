@@ -50,6 +50,9 @@ steps:
 
   # Step 9: Deploy the Helm chart
   - name: 'alpine/helm:3.8.0'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER}'
     args:
       [
         'upgrade', '--install', 'my-app-release', './helm-chart',
